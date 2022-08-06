@@ -18,4 +18,5 @@
 
 .error {
     border: 3px solid red;
+    color: red;
 }

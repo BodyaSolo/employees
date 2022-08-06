@@ -37,12 +37,15 @@ class EmployeesAddform extends Component {
   render() {
     const { name, salary, error } = this.state;
     let classNames = 'form-control new-post-label'
+    let message = '';
     if (error) {
-      classNames +=' error'
+      classNames += ' error'
+      message = 'Некоректно введено дані!!!'
     }
     return (
     <div className="app-add-form">
-      <h3>Додати нового співробітника</h3>
+        <h3>Додати нового співробітника</h3>
+        <h4>{message}</h4>
       <form
           className="add-form d-flex"
           onSubmit={this.onSubmit}>
