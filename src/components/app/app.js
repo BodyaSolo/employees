@@ -19,6 +19,7 @@ class App extends Component {
         { name: 'Олександр', salary: 6000, increase: true, id: 3 }
       ]
     }
+    this.maxId = 4;// id counter for creating a new employee in the database
   }
 
   deleteItem = (id) => {
@@ -27,6 +28,21 @@ class App extends Component {
         data: data.filter(item => item.id !== id)
       }
     })
+  } // delete employer from this.state
+
+  addItem = (name, salary) => { 
+    const newItem = {
+      name,
+      salary,
+      increase: false,
+      id: this.maxId++
+    }
+    this.setState(({ data }) => {
+      const newArr = [...data, newItem];
+      return {
+        data : newArr
+      }
+    }) // add new employeer to this.state
   }
   
   render() {
@@ -41,7 +57,7 @@ class App extends Component {
       <EmployeesList
         data={this.state.data}
         onDelete={this.deleteItem} />
-      <EmployeesAddform/>
+        <EmployeesAddform onAdd={this.addItem} />
     </div>
   );
   }

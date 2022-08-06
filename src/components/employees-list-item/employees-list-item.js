@@ -14,13 +14,13 @@ class EmployeesListItem extends Component{
       this.setState(({ increase }) => ({
         increase: !increase
       }))
-    }
+    } //changing the increase parameter to the opposite value
   
   onRise = () => {
     this.setState(({ rise }) => ({
         rise: !rise
       }))
-  }
+  } //changing the rise parameter to the opposite value
 
   render(){
     const { name, salary, onDelete } = this.props;
@@ -29,10 +29,10 @@ class EmployeesListItem extends Component{
     let classNames = "list-group-item d-flex justify-content-between";
     if (increase) {
       classNames += ' increase';
-    }
+    } //parameter validation and addition or subtraction of classNames
     if (rise) {
       classNames += ' like';
-    }
+    } //parameter validation and addition or subtraction of classNames
 
     return (
       <li className={classNames}>

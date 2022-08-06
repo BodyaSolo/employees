@@ -14,6 +14,15 @@ class EmployeesAddform extends Component {
     this.setState({
       [e.target.name] : e.target.value
     })
+  } // receiving a change of input data in this.state
+
+  onSubmit = (e) => {
+    e.preventDefault();
+    this.props.onAdd(this.state.name, this.state.salary);
+    this.setState({
+      name: '',
+      salary: ''
+    }) // passing data about the new user to app.js
   }
 
 
@@ -23,7 +32,8 @@ class EmployeesAddform extends Component {
     <div className="app-add-form">
       <h3>Додати нового співробітника</h3>
       <form
-          className="add-form d-flex">
+          className="add-form d-flex"
+          onSubmit={this.onSubmit}>
           <input type="text"
                 className="form-control new-post-label"
                 placeholder="Як його звати?"
