@@ -40,13 +40,14 @@ class EmployeesAddform extends Component {
     let message = '';
     if (error) {
       classNames += ' error'
-      message = 'Некоректно введено дані!!!'
+      message = <h4 style={{ color: 'red' }}>Некоректно введені дані!!!</h4>
     }
     return (
     <div className="app-add-form">
         <h3>Додати нового співробітника</h3>
-        <h4>{message}</h4>
-      <form
+        {message}
+        <form
+          
           className="add-form d-flex"
           onSubmit={this.onSubmit}>
           <input type="text"
