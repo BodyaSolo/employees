@@ -18,7 +18,8 @@ class App extends Component {
         { name: 'Іван', salary: 3000, increase: false , rise: false, id: 2 },
         { name: 'Олександр', salary: 6000, increase: true, rise: false, id: 3 }
       ],
-      term: ''
+      term: '',
+      filter: 'all'
     }
     this.maxId = 4;// id counter for creating a new employee in the database
   }
@@ -84,22 +85,37 @@ class App extends Component {
     this.setState({ term });
   } //changing this.state.term
 
+  filterPost = (items, filter) => {
+    switch (filter) {
+      case 'rise':
+        return items.filter(item => item.rise);
+      case 'moreThen1000':
+        return items.filter(item => item.salary > 1000);
+      default:
+        return items;
+    }
+    
+  } //filter data
+
+  onFilterSelect = (filter) => {
+    this.setState({ filter });
+  } // overwriting data in state after the filter
   
   render() {
-    const { data, term } = this.state;
+    const { data, term, filter } = this.state;
     const employees = this.state.data.length;
     const increased = this.state.data.filter(item => item.increase).length;
-    const visibleData = this.searchEmp(data, term);
+    const visibleData = this.filterPost(this.searchEmp(data, term), filter);
 
     return (
     <div className="app">
-        <AppInfo
-          employees={employees}
-          increased={increased} />
+      <AppInfo
+        employees={employees}
+        increased={increased} />
       
       <div className="search-panel">
-          <SearchPanel onUpdateSearch={this.onUpdateSearch} />
-        <AppFilter/>
+        <SearchPanel onUpdateSearch={this.onUpdateSearch} />
+          <AppFilter filter={filter} onFilterSelect={this.onFilterSelect} />
       </div>
       <EmployeesList
           data={visibleData}
