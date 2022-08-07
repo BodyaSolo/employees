@@ -17,7 +17,8 @@ class App extends Component {
         { name: 'Андрій', salary: 800, increase: false , rise: true, id: 1 },
         { name: 'Іван', salary: 3000, increase: false , rise: false, id: 2 },
         { name: 'Олександр', salary: 6000, increase: true, rise: false, id: 3 }
-      ]
+      ],
+      term: ''
     }
     this.maxId = 4;// id counter for creating a new employee in the database
   }
@@ -69,10 +70,27 @@ class App extends Component {
     }))
   } //switching the state of the props increase or rise
 
+  searchEmp = (items, term) => {
+    if (term.length === 0) {
+      return items;
+    }
+
+    return items.filter(item => {
+      return item.name.indexOf(term) > -1;
+    })
+  } //object filter to match the search
+
+  onUpdateSearch = (term) => {
+    this.setState({ term });
+  } //changing this.state.term
+
   
   render() {
+    const { data, term } = this.state;
     const employees = this.state.data.length;
     const increased = this.state.data.filter(item => item.increase).length;
+    const visibleData = this.searchEmp(data, term);
+
     return (
     <div className="app">
         <AppInfo
@@ -80,11 +98,11 @@ class App extends Component {
           increased={increased} />
       
       <div className="search-panel">
-        <SearchPanel/>
+          <SearchPanel onUpdateSearch={this.onUpdateSearch} />
         <AppFilter/>
       </div>
       <EmployeesList
-          data={this.state.data}
+          data={visibleData}
           onDelete={this.deleteItem}
           onToggleProp={this.onToggleProp}/>
         <EmployeesAddform onAdd={this.addItem} />
